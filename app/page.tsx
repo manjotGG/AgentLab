@@ -12,6 +12,7 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import Sidebar from "../components/Sidebar";
+import CustomNode from "../components/CustomNode";
 
 export default function Home() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -21,28 +22,34 @@ export default function Home() {
     setEdges((eds) => addEdge(params, eds));
 
   const addNode = (type: string) => {
-    const newNode = {
-      id: `${nodes.length + 1}`,
-      position: {
-        x: Math.random() * 400,
-        y: Math.random() * 400,
-      },
-      data: { label: type.toUpperCase() },
-      style: {
-        background:
-          type === "thinker"
-            ? "#3b82f6"
-            : type === "memory"
-            ? "#22c55e"
-            : type === "tool"
-            ? "#eab308"
-            : "#a855f7",
-        color: "white",
-      },
-    };
-
-    setNodes((nds) => [...nds, newNode]);
+  const colors: any = {
+    thinker: "#3b82f6",
+    memory: "#22c55e",
+    tool: "#eab308",
+    responder: "#a855f7",
   };
+
+  const newNode = {
+    id: `${nodes.length + 1}`,
+    type: "custom",
+    position: {
+      x: Math.random() * 400,
+      y: Math.random() * 400,
+    },
+    data: {
+      label: type.toUpperCase(),
+      type,
+      color: colors[type],
+      prompt: type === "thinker" ? "Write something..." : "",
+    },
+  };
+
+  setNodes((nds) => [...nds, newNode]);
+};
+
+  const nodeTypes = {
+  custom: CustomNode,
+};
 
   return (
     <div className="flex">
@@ -56,6 +63,7 @@ export default function Home() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           fitView
+          nodeTypes={nodeTypes}
         >
           <MiniMap />
           <Controls />
