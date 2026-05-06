@@ -13,6 +13,9 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import Sidebar from "../components/Sidebar";
 import CustomNode from "../components/CustomNode";
+const nodeTypes = {
+  custom: CustomNode,
+};
 
 export default function Home() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -27,7 +30,7 @@ export default function Home() {
     memory: "#22c55e",
     tool: "#eab308",
     responder: "#a855f7",
-  };
+};
 
   const newNode = {
     id: `${nodes.length + 1}`,
@@ -47,9 +50,7 @@ export default function Home() {
   setNodes((nds) => [...nds, newNode]);
 };
 
-  const nodeTypes = {
-  custom: CustomNode,
-};
+  
 
   return (
     <div className="flex">
