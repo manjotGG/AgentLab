@@ -40,11 +40,27 @@ export default function Home() {
       y: Math.random() * 400,
     },
     data: {
-      label: type.toUpperCase(),
-      type,
-      color: colors[type],
-      prompt: type === "thinker" ? "Write something..." : "",
+    label: type.toUpperCase(),
+    type,
+    color: colors[type],
+    prompt: "",
+
+    onChange: (value: string) => {
+      setNodes((nds) =>
+        nds.map((node) =>
+         node.id === newNode.id
+            ? {
+               ...node,
+                data: {
+                 ...node.data,
+                 prompt: value,
+                },
+             }
+           : node
+        )
+      );
     },
+  },
   };
 
   setNodes((nds) => [...nds, newNode]);

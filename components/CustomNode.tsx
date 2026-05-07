@@ -4,15 +4,21 @@ import { Handle, Position } from "reactflow";
 
 export default function CustomNode({ data }: any) {
   return (
-    <div className="px-4 py-2 rounded-lg shadow-md text-white"
+    <div
+      className="px-4 py-3 rounded-xl shadow-lg min-w-[220px] text-white"
       style={{ background: data.color }}
     >
-      <strong>{data.label}</strong>
+      <div className="font-bold text-lg">
+        {data.label}
+      </div>
 
       {data.type === "thinker" && (
-        <div className="text-xs mt-2">
-          Prompt: {data.prompt || "No prompt"}
-        </div>
+        <textarea
+          className="mt-3 w-full rounded p-2 text-black text-sm"
+          placeholder="Enter prompt..."
+          value={data.prompt}
+          onChange={(e) => data.onChange?.(e.target.value)}
+        />
       )}
 
       <Handle type="target" position={Position.Top} />
