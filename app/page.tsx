@@ -71,8 +71,20 @@ export default function Home() {
   return (
     <div className="flex">
       <Sidebar addNode={addNode} />
+      
 
       <div className="w-full h-screen">
+        <div className="absolute top-4 right-4 z-50">
+          <button
+          onClick={() => {
+            console.log("NODES:", nodes);
+            console.log("EDGES:", edges);
+    }}
+    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg"
+    >
+      ▶ Run Agent
+  </button>
+</div>
         <ReactFlow
           nodes={nodes}
           edges={edges}
