@@ -76,10 +76,34 @@ export default function Home() {
       <div className="w-full h-screen">
         <div className="absolute top-4 right-4 z-50">
           <button
-          onClick={() => {
-            console.log("NODES:", nodes);
-            console.log("EDGES:", edges);
-    }}
+          onClick={async () => {
+  const thinkerNode = nodes.find(
+    (node) => node.data.type === "thinker"
+  );
+
+  if (!thinkerNode) {
+    alert("No thinker node found");
+    return;
+  }
+
+  const prompt = thinkerNode.data.prompt;
+
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      prompt,
+    }),
+  });
+
+  const data = await res.json();
+
+  console.log(data);
+
+  alert(data.response);
+}}
     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg"
     >
       ▶ Run Agent
